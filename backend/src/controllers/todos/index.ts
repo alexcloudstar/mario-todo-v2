@@ -1,31 +1,48 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 const prisma = new PrismaClient();
-export const getTodos = async (req: Request, res: Response) => {
+export const getTodos = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const todos = await prisma.todo.findMany();
+
     return res.status(200).json({ todos });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
-export const createTodo = async (req: Request, res: Response) => {
+export const getUserTodos = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { title } = req.body;
+    const { userSessionId } = req.params;
+
+    const todos = await prisma.todo.findMany({
+      where: {
+        userSessionId,
+      },
+    });
+    return res.status(200).json({ todos });
+  } catch (error: any) {
+    next(error);
+  }
+};
+
+export const createTodo = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { title, userSessionId } = req.body;
     const todo = await prisma.todo.create({
       data: {
         title,
+        userSessionId,
       },
     });
     return res.status(201).json({ todo });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
-export const updateTodo = async (req: Request, res: Response) => {
+export const updateTodo = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { title, done } = req.body;
@@ -40,11 +57,11 @@ export const updateTodo = async (req: Request, res: Response) => {
     });
     return res.status(200).json({ todo });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
-export const deleteTodo = async (req: Request, res: Response) => {
+export const deleteTodo = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     await prisma.todo.delete({
@@ -56,6 +73,6 @@ export const deleteTodo = async (req: Request, res: Response) => {
       message: 'Todo successfully deleted',
     });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 };

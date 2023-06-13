@@ -16,4 +16,5 @@ model Todo {
   updatedAt DateTime @updatedAt
   title     String
   done      Boolean  @default(false)
+  userSessionId String
 }
