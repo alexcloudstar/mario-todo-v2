@@ -1,6 +1,10 @@
+import { Todos } from './components';
+
 const App = () => {
   return (
-    <div className='text-3xl text-center text-red-500'>Hello World 🌊</div>
+    <main className='flex justify-center items-center'>
+      <Todos />
+    </main>
   );
 };
 
