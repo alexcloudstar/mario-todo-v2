@@ -12,11 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
+const routes_1 = __importDefault(require("./routes"));
 const pg_1 = require("pg");
 const app = (0, express_1.default)();
-dotenv_1.default.config();
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
+(0, routes_1.default)(app);
 const pool = new pg_1.Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -33,9 +36,7 @@ const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 connectToDB();
-app.get('/test', (req, res, next) => {
-    res.send('hi there! 👋🏻');
-});
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.PORT}`);
 });
+exports.default = app;
