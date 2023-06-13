@@ -23,7 +23,7 @@ const connectToDB = async () => {
 connectToDB();
 
 app.get('/test', (req: Request, res: Response, next: NextFunction) => {
-  res.send('hi');
+  res.send('hi there! 👋🏻');
 });
 
 app.listen(process.env.PORT, () => {

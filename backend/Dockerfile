@@ -13,9 +13,6 @@ COPY ["package.json", "yarn.lock", "tsconfig.json", ".env", "./"]
 COPY ./src ./src
 
 # Installs all packages
-RUN npm i -g yarn
-
-# Installs all packages
 RUN yarn install
 
 # Runs the dev npm script to build & start the server

@@ -34,7 +34,7 @@ const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 connectToDB();
 app.get('/test', (req, res, next) => {
-    res.send('hi');
+    res.send('hi there! 👋🏻');
 });
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.PORT}`);
