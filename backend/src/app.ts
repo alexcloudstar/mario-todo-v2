@@ -1,9 +1,15 @@
-import express, { NextFunction, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import 'dotenv/config';
+import express from 'express';
+import routes from './routes';
 import { Pool } from 'pg';
 
 const app = express();
-dotenv.config();
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+routes(app);
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -22,10 +28,8 @@ const connectToDB = async () => {
 };
 connectToDB();
 
-app.get('/test', (req: Request, res: Response, next: NextFunction) => {
-  res.send('hi there! 👋🏻');
-});
-
 app.listen(process.env.PORT, () => {
   console.log(`Server is running at ${process.env.PORT}`);
 });
+
+export default app;
