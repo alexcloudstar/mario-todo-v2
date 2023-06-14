@@ -5,6 +5,7 @@ export default {
     extend: {
       boxShadow: {
         custom: '0px 0px 54px -8px rgba(0,0,0,0.75)',
+        button: '0px 5px 16px 0px rgba(0,0,0,0.4);',
       },
     },
   },
