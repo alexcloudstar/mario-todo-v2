@@ -13,9 +13,6 @@ const Input = () => {
   } = useForm<{ todo: string }>();
 
   const onSubmit = (data: { todo: string }) => {
-    // Add todo to the store
-    // Add todo to the database
-    // clear the input
     addTodo({
       id: todos.length + 1,
       title: data.todo,
