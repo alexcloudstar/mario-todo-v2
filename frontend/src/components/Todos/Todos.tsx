@@ -1,8 +1,17 @@
-import React from 'react';
-import { Input } from '../Input';
+import { useTodosStore } from '../../store';
 
 const Todos = () => {
-  return <div className=''></div>;
+  const todos = useTodosStore(state => state.todos);
+
+  return (
+    <div className=''>
+      {todos.map(todo => (
+        <div key={todo.id} className=''>
+          {todo.title}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Todos;

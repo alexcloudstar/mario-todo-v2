@@ -1,12 +1,29 @@
 import { useForm } from 'react-hook-form';
+import { useTodosStore } from '../../store';
+import { Todo } from '../../types';
 
 const Input = () => {
+  const [todos, addTodo] = useTodosStore(state => [state.todos, state.addTodo]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<{ todo: string }>();
-  const onSubmit = (data: { todo: string }) => console.log(data.todo);
+
+  const onSubmit = (data: { todo: string }) => {
+    // Add todo to the store
+    // Add todo to the database
+    // clear the input
+    addTodo({
+      id: todos.length + 1,
+      title: data.todo,
+      done: false,
+    } as Todo);
+
+    reset();
+  };
 
   return (
     <>
