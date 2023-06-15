@@ -4,7 +4,7 @@ export type TodoType = {
   updatedAt: Date;
   title: string;
   done: boolean;
-  userSessionId: string;
+  userId: string;
 };
 
 export type ClassesType = {

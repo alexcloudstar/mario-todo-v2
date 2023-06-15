@@ -25,7 +25,7 @@ export const useTodosStore = create<TodosState>(set => ({
       updatedAt: new Date(),
       title: 'Wash the dishes',
       done: false,
-      userSessionId: '1',
+      userId: '1',
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ export const useTodosStore = create<TodosState>(set => ({
       updatedAt: new Date(),
       title: 'Do the laundry',
       done: false,
-      userSessionId: '1',
+      userId: '1',
     },
     {
       id: 3,
@@ -41,7 +41,7 @@ export const useTodosStore = create<TodosState>(set => ({
       updatedAt: new Date(),
       title: 'Walk the dog',
       done: false,
-      userSessionId: '1',
+      userId: '1',
     },
     {
       id: 4,
@@ -49,7 +49,7 @@ export const useTodosStore = create<TodosState>(set => ({
       updatedAt: new Date(),
       title: 'Take out the trash',
       done: true,
-      userSessionId: '1',
+      userId: '1',
     },
     {
       id: 5,
@@ -57,7 +57,7 @@ export const useTodosStore = create<TodosState>(set => ({
       updatedAt: new Date(),
       title: 'Buy groceries',
       done: false,
-      userSessionId: '1',
+      userId: '1',
     },
   ],
   onAdd: todo => set(state => ({ todos: [...state.todos, todo] })),
