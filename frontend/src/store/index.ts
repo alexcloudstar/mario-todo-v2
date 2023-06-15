@@ -11,6 +11,11 @@ interface TodosState {
   onUpdate: (todoId: TodoType['id'], title: TodoType['title']) => void;
 }
 
+interface InputState {
+  value: string;
+  setValue: (value: string) => void;
+}
+
 export const useTodosStore = create<TodosState>(set => ({
   isEditing: null,
   todos: [
@@ -76,4 +81,9 @@ export const useTodosStore = create<TodosState>(set => ({
         todo.id === todoId ? { ...todo, title } : todo
       ),
     })),
+}));
+
+export const useInputStore = create<InputState>(set => ({
+  value: '',
+  setValue: (value: string) => set(() => ({ value })),
 }));
