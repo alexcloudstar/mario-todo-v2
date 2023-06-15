@@ -7,8 +7,10 @@ const App = () => {
       <h1 className='text-3xl font-bold text-slate-900 my-6 font-smfont'>
         Your Todos
       </h1>
-      <Input />
-      <Todos />
+      <div className='m-w-[350px]'>
+        <Input />
+        <Todos />
+      </div>
     </main>
   );
 };

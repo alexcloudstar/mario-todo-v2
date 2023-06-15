@@ -24,11 +24,14 @@ const Input = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex items-center w-full'
+      >
         <input
           placeholder='Enter your todo'
           {...register('todo', { required: true })}
-          className='mx-2 py-1.5 px-2.5 outline-0 rounded-md'
+          className='mr-2 py-1.5 px-2.5 outline-0 rounded-md w-full'
         />
         <button
           type='submit'
