@@ -7,7 +7,8 @@ WORKDIR /usr/src/app
 
 # Copies package.json, package-lock.json, tsconfig.json, .env to the root of WORKDIR
 # COPY ["package.json", "package-lock.json", "tsconfig.json", ".env", "./"]
-COPY ["package.json", "yarn.lock", "tsconfig.json", ".env", "./"]
+
+COPY ["package.json", "yarn.lock", "tsconfig.json", ".env","./"]
 
 # Copies everything in the src directory to WORKDIR/src
 COPY ./src ./src
@@ -17,3 +18,7 @@ RUN yarn install
 
 # Runs the dev npm script to build & start the server
 CMD ["yarn", "dev"]
+
+RUN npx prisma generate prisma/schema.prisma
+
+RUN npx prisma db push
