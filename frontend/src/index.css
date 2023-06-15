@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'SMFont';
+  src: url('./assets/super_mario_font.ttf');
+}
+
 html,
 body,
 #root,
