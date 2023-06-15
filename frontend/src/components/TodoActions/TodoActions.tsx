@@ -1,22 +1,57 @@
 import { Button } from '..';
+import { API_URL } from '../../constants';
 
 import { useInputStore, useTodosStore } from '../../store';
 import { ClassesType, TodoType } from '../../types';
 
 type TodoActionsProps = {
-  onSubmit?: (data: { editedTodo: string }) => void;
+  onSubmit?: (data: { editedTodo: string; id: number }) => void;
 } & Pick<TodoType, 'id' | 'done'> &
   ClassesType;
 
 const TodoActions = ({ classes, id, done, onSubmit }: TodoActionsProps) => {
-  const [isEditing, onToggle, onDelete, onToggleEdit] = useTodosStore(state => [
-    state.isEditing,
-    state.onToggle,
-    state.onDelete,
-    state.onToggleEdit,
-  ]);
+  const [todos, isEditing, onToggle, onDelete, onToggleEdit] = useTodosStore(
+    state => [
+      state.todos,
+      state.isEditing,
+      state.onToggle,
+      state.onDelete,
+      state.onToggleEdit,
+    ]
+  );
 
   const value = useInputStore(state => state.value);
+
+  const onToggleStatus = async () => {
+    onToggle(parseInt(id.toString()));
+    const findedTodo = todos.find(todo => todo.id === id);
+
+    try {
+      await fetch(`${API_URL}/todos/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          done: !findedTodo?.done,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDeleteMethod = async () => {
+    try {
+      await fetch(`${API_URL}/todos/${id}`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    onDelete(id);
+  };
 
   return (
     <>
@@ -25,8 +60,8 @@ const TodoActions = ({ classes, id, done, onSubmit }: TodoActionsProps) => {
         text={done && isEditing !== id ? '❌' : '✅'}
         onClick={
           isEditing === id && onSubmit
-            ? () => onSubmit({ editedTodo: value })
-            : () => onToggle(parseInt(id.toString()))
+            ? () => onSubmit({ editedTodo: value, id })
+            : onToggleStatus
         }
         todoId={id}
         // disabled={isEditing === id}
@@ -41,7 +76,7 @@ const TodoActions = ({ classes, id, done, onSubmit }: TodoActionsProps) => {
       <Button
         classes={`${classes} mr-2`}
         text='🗑️'
-        onClick={() => onDelete(parseInt(id.toString()))}
+        onClick={onDeleteMethod}
         todoId={id}
         disabled={isEditing === id}
       />

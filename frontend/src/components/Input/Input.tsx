@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useTodosStore } from '../../store';
 import { TodoType } from '../../types';
+import { API_URL } from '../../constants';
 
 const Input = () => {
   const [todos, onAdd] = useTodosStore(state => [state.todos, state.onAdd]);
@@ -12,7 +13,22 @@ const Input = () => {
     reset,
   } = useForm<{ todo: string }>();
 
-  const onSubmit = (data: { todo: string }) => {
+  const onSubmit = async (data: { todo: string }) => {
+    try {
+      await fetch(`${API_URL}/todos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: data.todo,
+          userId: localStorage.getItem('userId'),
+        }),
+      });
+    } catch (e: any) {
+      console.log(e.message);
+    }
+
     onAdd({
       id: todos.length + 1,
       title: data.todo,

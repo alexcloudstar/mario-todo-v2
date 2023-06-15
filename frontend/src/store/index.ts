@@ -9,6 +9,7 @@ interface TodosState {
   onDelete: (todoId: TodoType['id']) => void;
   onToggleEdit: (todoId: TodoType['id']) => void;
   onUpdate: (todoId: TodoType['id'], title: TodoType['title']) => void;
+  setTodos: (todos: TodoType[]) => void;
 }
 
 interface InputState {
@@ -60,6 +61,7 @@ export const useTodosStore = create<TodosState>(set => ({
       userId: '1',
     },
   ],
+  setTodos: todos => set(() => ({ todos })),
   onAdd: todo => set(state => ({ todos: [...state.todos, todo] })),
   onToggle: todoId =>
     set(state => ({
