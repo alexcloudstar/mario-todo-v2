@@ -9,7 +9,8 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "prettier": "prettier --write \"**/*.ts\""
+    "prettier": "prettier --write \"**/*.ts\"",
+    "setup:prisma": "npx prisma generate && npx prisma db push"
   },
   "prisma": {
     "schema": "./prisma/schema.prisma"
