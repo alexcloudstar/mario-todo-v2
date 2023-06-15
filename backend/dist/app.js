@@ -15,10 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const express_1 = __importDefault(require("express"));
 const routes_1 = __importDefault(require("./routes"));
+const cors_1 = __importDefault(require("cors"));
 const pg_1 = require("pg");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+// @ts-expect-error
+app.use((0, cors_1.default)(process.env.CORS));
 (0, routes_1.default)(app);
 const pool = new pg_1.Pool({
     host: process.env.DB_HOST,
