@@ -14,11 +14,11 @@ export const getTodos = async (req: Request, res: Response, next: NextFunction) 
 
 export const getUserTodos = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { userSessionId } = req.params;
+    const { userId } = req.params;
 
     const todos = await prisma.todo.findMany({
       where: {
-        userSessionId,
+        userId,
       },
     });
     return res.status(200).json({ todos });
@@ -29,11 +29,11 @@ export const getUserTodos = async (req: Request, res: Response, next: NextFuncti
 
 export const createTodo = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { title, userSessionId } = req.body;
+    const { title, userId } = req.body;
     const todo = await prisma.todo.create({
       data: {
         title,
-        userSessionId,
+        userId,
       },
     });
     return res.status(201).json({ todo });

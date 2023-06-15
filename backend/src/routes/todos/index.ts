@@ -4,7 +4,7 @@ import { createTodo, deleteTodo, getTodos, getUserTodos, updateTodo } from '../.
 const router = Router();
 
 router.get('', getTodos);
-router.get('/:userSessionId', getUserTodos);
+router.get('/:userId', getUserTodos);
 router.post('', createTodo);
 router.patch('/:id', updateTodo);
 router.delete('/:id', deleteTodo);

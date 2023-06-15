@@ -1,13 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
 import routes from './routes';
+import cors from 'cors';
 import { Pool } from 'pg';
 
 const app = express();
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
+// @ts-expect-error
+app.use(cors(process.env.CORS));
 
 routes(app);
 
