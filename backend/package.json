@@ -11,6 +11,9 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier": "prettier --write \"**/*.ts\""
   },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
