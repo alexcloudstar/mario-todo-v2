@@ -1,12 +1,18 @@
 import { create } from 'zustand';
-import { Todo } from '../types';
+import { TodoType } from '../types';
 
 interface TodosState {
-  todos: Todo[];
-  addTodo: (todo: Todo) => void;
+  todos: TodoType[];
+  isEditing: TodoType['id'] | null;
+  onAdd: (todo: TodoType) => void;
+  onToggle: (todoId: TodoType['id']) => void;
+  onDelete: (todoId: TodoType['id']) => void;
+  onToggleEdit: (todoId: TodoType['id']) => void;
+  onUpdate: (todoId: TodoType['id'], title: TodoType['title']) => void;
 }
 
 export const useTodosStore = create<TodosState>(set => ({
+  isEditing: null,
   todos: [
     {
       id: 1,
@@ -49,5 +55,25 @@ export const useTodosStore = create<TodosState>(set => ({
       userSessionId: '1',
     },
   ],
-  addTodo: todo => set(state => ({ todos: [...state.todos, todo] })),
+  onAdd: todo => set(state => ({ todos: [...state.todos, todo] })),
+  onToggle: todoId =>
+    set(state => ({
+      todos: state.todos.map(todo =>
+        todo.id === todoId ? { ...todo, done: !todo.done } : todo
+      ),
+    })),
+  onDelete: todoId =>
+    set(state => ({
+      todos: state.todos.filter(todo => todo.id !== todoId),
+    })),
+  onToggleEdit: todoId =>
+    set(state => ({
+      isEditing: state.isEditing === todoId ? null : todoId,
+    })),
+  onUpdate: (todoId, title) =>
+    set(state => ({
+      todos: state.todos.map(todo =>
+        todo.id === todoId ? { ...todo, title } : todo
+      ),
+    })),
 }));

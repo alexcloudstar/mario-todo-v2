@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useTodosStore } from '../../store';
-import { Todo } from '../../types';
+import { TodoType } from '../../types';
 
 const Input = () => {
-  const [todos, addTodo] = useTodosStore(state => [state.todos, state.addTodo]);
+  const [todos, onAdd] = useTodosStore(state => [state.todos, state.onAdd]);
 
   const {
     register,
@@ -13,11 +13,11 @@ const Input = () => {
   } = useForm<{ todo: string }>();
 
   const onSubmit = (data: { todo: string }) => {
-    addTodo({
+    onAdd({
       id: todos.length + 1,
       title: data.todo,
       done: false,
-    } as Todo);
+    } as TodoType);
 
     reset();
   };
