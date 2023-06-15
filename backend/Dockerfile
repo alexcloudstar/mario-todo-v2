@@ -16,9 +16,9 @@ COPY ./src ./src
 # Installs all packages
 RUN yarn install
 
-# Runs the dev npm script to build & start the server
-CMD ["yarn", "dev"]
-
 RUN npx prisma generate prisma/schema.prisma
 
 RUN npx prisma db push
+
+# Runs the dev npm script to build & start the server
+CMD ["yarn", "dev"]
