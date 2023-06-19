@@ -6,6 +6,10 @@ import { TodoActions } from '../TodoActions';
 
 const Todos = () => {
   const userId = localStorage.getItem('userId');
+  const [isInputErrorMessage, setIsInputErrorMessage] = useInputStore(state => [
+    state.isErrorMessage,
+    state.setIsErrorMessage,
+  ]);
   const [todos, editedTodo, onToggleEdit, onUpdate, setTodos] = useTodosStore(
     state => [
       state.todos,
@@ -21,7 +25,11 @@ const Todos = () => {
   const classes = `bg-slate-50 py-1 px-3 rounded-md text-zinc-900 cursor-pointer transition-all ease-out duration-200 hover:bg-slate-100 hover:text-slate-500`;
 
   const onSubmit = async (data: { editedTodo: string; id: number }) => {
-    if (!data.editedTodo) return;
+    if (!data.editedTodo)
+      return setIsInputErrorMessage({
+        isErrorMessage: true,
+        todoId: data.id,
+      });
 
     onToggleEdit(-1);
     onUpdate(parseInt(editedTodo?.toString() ?? ''), data.editedTodo);
@@ -38,9 +46,13 @@ const Todos = () => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setValue('');
+      setIsInputErrorMessage({
+        isErrorMessage: false,
+        todoId: -1,
+      });
     }
-
-    setValue('');
   };
 
   useEffect(() => {
@@ -61,7 +73,7 @@ const Todos = () => {
           className='flex items-center justify-between flex-wrap flex-col'
           key={todo.id}
         >
-          <div>
+          <div className='flex items-center'>
             <Todo
               id={todo.id}
               title={todo.title}
@@ -75,7 +87,12 @@ const Todos = () => {
               onSubmit={onSubmit}
             />
           </div>
-          <span className='text-red-500'>You cannot have an empty todo</span>
+          {isInputErrorMessage.isErrorMessage &&
+            todo.id === isInputErrorMessage.todoId && (
+              <span className='text-red-500'>
+                You cannot have an empty todo
+              </span>
+            )}
         </div>
       ))}
     </ul>

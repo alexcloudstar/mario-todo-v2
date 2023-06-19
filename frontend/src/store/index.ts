@@ -15,6 +15,17 @@ interface TodosState {
 interface InputState {
   value: string;
   setValue: (value: string) => void;
+  isErrorMessage: {
+    todoId: TodoType['id'];
+    isErrorMessage: boolean;
+  };
+  setIsErrorMessage: ({
+    isErrorMessage,
+    todoId,
+  }: {
+    isErrorMessage: boolean;
+    todoId: TodoType['id'];
+  }) => void;
 }
 
 export const useTodosStore = create<TodosState>(set => ({
@@ -47,4 +58,16 @@ export const useTodosStore = create<TodosState>(set => ({
 export const useInputStore = create<InputState>(set => ({
   value: '',
   setValue: (value: string) => set(() => ({ value })),
+  isErrorMessage: {
+    todoId: -1,
+    isErrorMessage: false,
+  },
+  setIsErrorMessage: ({ isErrorMessage, todoId }) => {
+    set(() => ({
+      isErrorMessage: {
+        todoId,
+        isErrorMessage,
+      },
+    }));
+  },
 }));
