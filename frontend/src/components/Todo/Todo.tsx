@@ -23,7 +23,7 @@ const Todo = ({ id, done, title, classes }: TodoProps) => {
   ) : (
     <li
       key={id}
-      className={`my-2 min-w-[150px] ${classes} ${
+      className={`my-2 w-[150px] ${classes} overflow-hidden ${
         done ? 'line-through !bg-green-400' : ''
       }`}
     >
